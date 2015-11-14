@@ -1,8 +1,7 @@
 module.exports = function(app, passport) {
 
 	app.get('/', function(req, res) {
-		// res.redirect('/login');
-		res.json(process.env);
+		res.redirect('/login');
 	});
 
 	app.get('/login', function(req, res) {

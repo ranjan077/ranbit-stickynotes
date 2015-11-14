@@ -19,7 +19,7 @@ var ip = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// mongoose.connect(mongoConfig.connect_url);
+mongoose.connect(mongoConfig.connect_url);
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
