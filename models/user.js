@@ -2,17 +2,26 @@ var mongoose =  require('mongoose');
 var validator = require('validator');
 var bcrypt   = require('bcrypt-nodejs');
 var userSchema = new mongoose.Schema({
-    name: 'String',
-    email:  {
-        type: 'String',
-        validate: [ validator.isEmail, 'invalid email' ]
+    
+    local            : {
+        name         : String,
+	    email        :  {
+				        type: String,
+				        validate: [ validator.isEmail, 'invalid email' ]
+				    },
+	    username    : String,
+	    password    : String
     },
-    username: 'String',
-    password: 'String'
+    facebook         : {
+        id           : String,
+        token        : String,
+        email        : String,
+        name         : String
+    }
 });
 
 userSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this['password']);
+    return bcrypt.compareSync(password, this.local['password']);
 };
 
 userSchema.methods.generateHash = function(password) {

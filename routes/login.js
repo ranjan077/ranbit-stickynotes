@@ -33,6 +33,14 @@ module.exports = function(app, passport) {
 		failureFlash : true
 	}));
 
+	// facebook authentication routes
+	app.get('/auth/facebook', passport.authenticate('facebook-login', { scope : 'email' }));
+
+	app.get('/auth/facebook/callback',
+        passport.authenticate('facebook-login', {
+            successRedirect : '/home',
+            failureRedirect : '/login'
+        }));
 	function isLoggedIn(req, res, next) {
 
 
