@@ -5,8 +5,7 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/login', function(req, res) {
-		// res.render('login', { message: req.flash('loginMessage'), isThisLoginPage: true});
-		res.json(process.env);
+		res.render('login', { message: req.flash('loginMessage'), isThisLoginPage: true});
 	});
 
 	app.get('/signup',  function(req, res) {
