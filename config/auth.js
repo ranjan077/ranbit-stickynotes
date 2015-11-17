@@ -1,4 +1,4 @@
-var callbackURLString = process.env.OPENSHIFT_APP_DNS ? process.env.OPENSHIFT_APP_DNS + '/auth/facebook/callback' : 'http://localhost:3000/auth/facebook/callback'
+var callbackURLString = process.env.OPENSHIFT_APP_DNS ? '/facebook/callback' : 'http://localhost:3000/auth/facebook/callback'
 
 module.exports = {
 	 'facebookAuth' : {
