@@ -5,7 +5,8 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/login', function(req, res) {
-		res.render('login', { message: req.flash('loginMessage'), isThisLoginPage: true});
+		// res.render('login', { message: req.flash('loginMessage'), isThisLoginPage: true});
+		res.json(process.env);
 	});
 
 	app.get('/signup',  function(req, res) {
@@ -18,7 +19,7 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/home', isLoggedIn, function(req, res) {
-		res.render('home');
+		res.render('home', {user : req.user});
 	});
 
 	app.post('/login', passport.authenticate('local-login', {
@@ -34,13 +35,14 @@ module.exports = function(app, passport) {
 	}));
 
 	// facebook authentication routes
-	app.get('/auth/facebook', passport.authenticate('facebook-login', { scope : 'email' }));
+	app.get('/auth/facebook', passport.authenticate('facebook-login'));
 
 	app.get('/auth/facebook/callback',
         passport.authenticate('facebook-login', {
             successRedirect : '/home',
             failureRedirect : '/login'
         }));
+
 	function isLoggedIn(req, res, next) {
 
 

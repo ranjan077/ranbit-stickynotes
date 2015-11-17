@@ -35,8 +35,13 @@
 
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
-        	<div class="circular allign-center"></div>
+            <% if (user.facebook && user.facebook.id) {%>
+        	<div class="circular allign-center" style="background: url(https://graph.facebook.com/<%= user.facebook.id%>/picture?type=normal) no-repeat;"></div>
         	<div>
+            <% } else {%>
+                <div class="circular allign-center" style="background: url(/assets/img/fb_empty_profilepic.jpg) no-repeat;"></div>
+                <div>
+            <% } %>
         		<span class="logout"><a href="/logout"><h3>Logout</h3></a></span>
         	</div>
         	<div>
