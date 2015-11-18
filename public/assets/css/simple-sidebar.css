@@ -124,6 +124,7 @@ a {
     
     height:800px;
     width:100%;
+    background-image: url(/assets/img/backgrounds/blackboard.jpg);
     
 }
 @media(min-width:768px) {

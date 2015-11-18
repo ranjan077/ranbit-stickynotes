@@ -1,12 +1,9 @@
 <div class="notes-main-container">
-	<div class="sticky  ui-widget-content" id="demo" >
-	    <p contentEditable = "true" ondblclick="$(this).focus();"></p>
-	    
+	<div class="add-note"><input type="button" value="Add Note" ng-click="addNote()"/></div>
+	<div ng-repeat="note in notes" resize-dragable class="sticky" id="{{note._id}}" style="width:{{note.dimension.width}}; height:{{note.dimension.height}}; left:{{note.position.left}}; top:{{note.position.top}};">
+		<div class="note-header"><div class="note-delete" ng-click="deleteNote($event)"><img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/VisualEditor_-_Icon_-_Close.svg"/></div></div>
+		<div class="note-body">
+			 <p class="note-content" contentEditable = "true" ondblclick="$(this).focus();" ng-blur="saveNote($event)" ng-bind="note.note"></p>
+		</div>
 	</div>
-
 </div>
-<script>
-$(function() {
-            $( "#demo" ).draggable().resizable();
-        });
-</script>

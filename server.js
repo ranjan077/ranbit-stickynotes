@@ -22,8 +22,8 @@ app.set('view engine', 'ejs');
 mongoose.connect(mongoConfig.connect_url);
 
 app.use(logger('dev'));
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressSession({secret: 'mySecretKey'}));
@@ -33,6 +33,7 @@ app.use(flash());
 
 require('./config/passport')(passport);
 require('./routes/login')(app, passport);
+require('./routes/notes')(app);
 
 
 // catch 404
