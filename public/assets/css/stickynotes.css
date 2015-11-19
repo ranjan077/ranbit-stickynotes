@@ -1,6 +1,5 @@
 .sticky {
     /* General */
-    margin: 0 auto;
     width: 200px;
     height: 25%;
     /* Font */
@@ -77,4 +76,13 @@ background-color:#F9F9D9;
 
 .note-delete{
     float: right;
+}
+
+.add-note {
+    font-size: 4.333333em;
+    margin-left: 2%;
+}
+
+.add-note a{
+    color: rgb(238, 238, 238);
 }

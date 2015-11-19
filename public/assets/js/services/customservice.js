@@ -39,12 +39,12 @@ customService.factory('noteService', ['$http', '$q', function($http, $q){
 		 },
 		 data: { note: '',
 		 		 position : {
-		 		 	top: '50px',
-		 		 	left: '50px'
+		 		 	top: '10%',
+		 		 	left: '10%'
 		 		 },
 		 		 dimension : {
-		 		 	height: '200px',
-		 		 	width: '200px'
+		 		 	height: '25%',
+		 		 	width: '14%'
 		 		 }
 		 	}
 		}

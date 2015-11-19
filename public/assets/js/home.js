@@ -57,16 +57,20 @@ myapp.controller('notesController', ['$scope','$http', 'noteService', function($
 	init();
 }])
 
-myapp.directive('resizeDragable', [function(){
+myapp.directive('resizeDragable', ['noteService', function(noteService){
 	return {
 		restrict: 'A',
 		link: function($scope, element, iAttrs, controller) {
 			element.draggable({ cancel: ".note-content"}).resizable();
-			element.on("dragstart", function(e) {
+			element.on("dragstart", function(event) {
                 console.log("Drag strat event trigered");
             });
-			element.on('mouseup', function(e) {
-				console.log("Drag end event trigered");
+			element.on('mouseup', function(event) {
+				noteService.saveNote(event).then(function(response) {
+					console.log(response);
+				}, function(error) {
+					console.log(error);
+				});
 			});
 		}
 	};
