@@ -10,8 +10,8 @@ myapp.config(['$routeProvider',function($routeProvider) {
 	})
 }])
 
-myapp.controller('mainController', ['$scope', function($scope){
-	
+myapp.controller('mainController', ['$scope', '$location', function($scope, $location){
+	$location.path('/notes');
 }])
 
 myapp.controller('notesController', ['$scope','$http', 'noteService', function($scope, $http, noteService){
@@ -61,7 +61,7 @@ myapp.directive('resizeDragable', ['noteService', function(noteService){
 	return {
 		restrict: 'A',
 		link: function($scope, element, iAttrs, controller) {
-			element.draggable({ cancel: ".note-content"}).resizable();
+			element.draggable({ cancel: ".note-content", containment: "parent"}).resizable();
 			element.on("dragstart", function(event) {
                 console.log("Drag strat event trigered");
             });

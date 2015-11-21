@@ -1,7 +1,7 @@
 <div class="notes-main-container">
 	<div class="add-note">
 		<!-- <input type="button" value="Add Note" ng-click="addNote()"/> -->
-		<a href="" ng-click="addNote()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-plus-circle fa-6 "></i></span> </a>
+		<a href="" ng-click="addNote()"><span class="fa-lg pull-left"><i class="fa fa-plus-circle fa-6 "></i></span> </a>
 	</div>
 	<div ng-repeat="note in notes" resize-dragable class="sticky" id="{{note._id}}" style="width:{{note.dimension.width}}; height:{{note.dimension.height}}; left:{{note.position.left}}; top:{{note.position.top}};">
 		<div class="note-header"><div class="note-delete" ng-click="deleteNote($event)"><img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/VisualEditor_-_Icon_-_Close.svg"/></div></div>

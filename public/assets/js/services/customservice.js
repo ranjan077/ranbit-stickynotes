@@ -3,22 +3,30 @@ var customService = angular.module('customService',[]);
 customService.factory('noteService', ['$http', '$q', function($http, $q){
 
 	function saveNote(event) {
+		var element;
+		if(event.target.className == 'note-header') {
+			element = event.currentTarget.children[1];
+		}
+		else {
+			element = event.target;
+		}
+
 		var req = {
 		 method: 'POST',
 		 url: '/note',
 		 headers: {
 		   'Content-Type': 'application/json'
 		 },
-		 data: { note: event.target.innerText,
+		 data: { note: element.innerText,
 		 		 position : {
-		 		 	top: event.target.offsetParent.style.top,
-		 		 	left: event.target.offsetParent.style.left
+		 		 	top: element.offsetParent.style.top,
+		 		 	left: element.offsetParent.style.left
 		 		 },
 		 		 dimension : {
-		 		 	height: event.target.offsetParent.clientHeight,
-		 		 	width: event.target.offsetParent.clientWidth
+		 		 	height: element.offsetParent.clientHeight,
+		 		 	width: element.offsetParent.clientWidth
 		 		 },
-		 		 note_id: event.target.offsetParent.id
+		 		 note_id: element.offsetParent.id
 		  }
 		}
 		var deferred = $q.defer();

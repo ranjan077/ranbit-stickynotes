@@ -31,7 +31,7 @@ a {
 }
 
 .notes-main-container {
-    
+    padding: 1%;
     height: 100vh;
     width:100%;
     background-image: url(/assets/img/backgrounds/blackboard.jpg);

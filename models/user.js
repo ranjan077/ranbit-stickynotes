@@ -17,7 +17,11 @@ var userSchema = new mongoose.Schema({
         token        : String,
         email        : String,
         name         : String
-    }
+    },
+    note:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Note'
+    }]
 });
 
 userSchema.methods.validPassword = function(password) {

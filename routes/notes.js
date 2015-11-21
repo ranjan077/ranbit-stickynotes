@@ -1,4 +1,5 @@
 var Note = require('../models/note');
+var User = require('../models/user');
 
 module.exports = function(app) {
 	app.post('/note', function(req, res, next) {
@@ -19,9 +20,13 @@ module.exports = function(app) {
 				newNote.save(function (err, note) {
                     if (err)
                        throw err;
-                    console.log('Notes saved.');
-                    res.send(note);
-                });
+                   User.findByIdAndUpdate(req.user._id, {$addToSet: {note: note._id}}, {upsert: true}, function(err, user) {
+					   if(err)
+					   	throw err;
+						console.log('Notes saved.');
+                    	res.send(note);
+					});
+				});
 			}
 			else {
 				Note.findByIdAndUpdate(req.body.note_id , req.body, {upsert: true}, function(err, note) {
@@ -32,19 +37,28 @@ module.exports = function(app) {
 	});
 	
 	app.get('/notes', function(req, res) {
-		Note.find({}, function(err, notes){
-			res.send(notes);
-		})
-	})
+		User.findById(req.user._id, function(err, user) {
+					Note.find({
+			'_id': { $in: user.note}
+		}, function(err, notes){
+					res.send(notes);
+				})
+			})
+	});
+		
 
 	app.del('/note/:id', function(req, res) {
-		Note.findById(req.params.id, function(err, model){
+		Note.findById(req.params.id, function(err, note){
 			
 			if(err) {
 				return err;
 			}
-			model.remove();
-			res.send();
+			User.findByIdAndUpdate(req.user._id, {$pull: {note: note._id}}, {}, function(err, user) {
+				if(err)
+				throw err;
+				note.remove("Removed Note.");
+				res.send();
+			});
 		})
 	})
 }
