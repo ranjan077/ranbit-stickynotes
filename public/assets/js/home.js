@@ -44,6 +44,7 @@ myapp.controller('notesController', ['$scope','$http', 'noteService', function($
 		});
 	}
 	$scope.deleteNote = function(event) {
+		event.preventDefault();
 		noteService.deleteNote(event.target.offsetParent.id).then(function() {
 			noteService.getNotes().then(function(notes) {
 				$scope.notes = notes;
@@ -68,6 +69,7 @@ myapp.controller('notesController', ['$scope','$http', 'noteService', function($
 myapp.directive('resizeDragable', ['noteService', function(noteService){
 	return {
 		restrict: 'A',
+		priority: 0,
 		link: function($scope, element, iAttrs, controller) {
 			
 			var element;
@@ -79,6 +81,9 @@ myapp.directive('resizeDragable', ['noteService', function(noteService){
 			element.on('mouseup', function(event) {
 				if(event.target.className == 'note-header') {
 					element = event.currentTarget.children[1];
+				}
+				else if (event.target.className == 'note-delete') {
+					return;
 				}
 				else {
 					element = event.target;
