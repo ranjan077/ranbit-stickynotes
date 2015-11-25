@@ -44,12 +44,14 @@ myapp.controller('notesController', ['$scope','$http', 'noteService', function($
 		});
 	}
 	$scope.deleteNote = function(event) {
-		noteService.deleteNote(event.target.offsetParent.id).then(function() {
-			noteService.getNotes().then(function(notes) {
-				$scope.notes = notes;
-			}, function(error) {
-				console.log(error);
-			});
+		noteService.deleteNote(event.target.offsetParent.id).then(function(response) {
+			if (response.data.status == 'Removed note') {
+				noteService.getNotes().then(function(notes) {
+					$scope.notes = notes;
+				}, function(error) {
+					console.log(error);
+				});
+			}
 		}, function(error) {
 			console.log(error);
 		});

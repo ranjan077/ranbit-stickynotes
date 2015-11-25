@@ -58,12 +58,12 @@ module.exports = function(app) {
 					User.findByIdAndUpdate(req.user._id, {$pull: {note: note._id}}, {}, function(err, user) {
 						if(err)
 						res.json({'error': err});
-						note.remove("Removed Note.");
-						res.send();
+						note.remove();
+						res.send({'status': 'Removed note'});
 					});
 				}
 				else {
-					res.send();
+					res.send({'status': ''});
 				}
 			})
 		});

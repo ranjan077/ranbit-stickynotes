@@ -78,8 +78,8 @@ customService.factory('noteService', ['$http', '$q', function($http, $q){
 		$http({
 		  method: 'DELETE',
 		  url: '/note/' +  note_id
-		}).then(function success(notes) {
-		    deferred.resolve(notes.data);
+		}).then(function success(response) {
+		    deferred.resolve(response);
 
 		  }, function(error) {
 			deferred.reject(error);
