@@ -48,17 +48,22 @@ module.exports = function(app) {
 		
 
 	app.del('/note/:id', function(req, res) {
-		Note.findById(req.params.id, function(err, note){
+		process.nextTick(function() {
+			Note.findById(req.params.id, function(err, note){
 			
-			if(err) {
-				res.json({'error': err});
-			}
-			User.findByIdAndUpdate(req.user._id, {$pull: {note: note._id}}, {}, function(err, user) {
-				if(err)
-				res.json({'error': err});
-				note.remove("Removed Note.");
-				res.send();
-			});
-		})
+				if(err) {
+					res.json({'error': err});
+				}
+				if (note) {
+					User.findByIdAndUpdate(req.user._id, {$pull: {note: note._id}}, {}, function(err, user) {
+						if(err)
+						res.json({'error': err});
+						note.remove("Removed Note.");
+						res.send();
+					});
+				}
+			})
+		});
+		
 	})
 }
