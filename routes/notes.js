@@ -62,6 +62,9 @@ module.exports = function(app) {
 						res.send();
 					});
 				}
+				else {
+					res.send();
+				}
 			})
 		});
 		
