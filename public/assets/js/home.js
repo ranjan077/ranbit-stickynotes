@@ -68,34 +68,75 @@ myapp.controller('notesController', ['$scope','$http', 'noteService', function($
 }])
 
 myapp.directive('resizeDragable', ['noteService', function(noteService){
+
+	function GetAllElementsAt(a, b, c, d) {
+	    var $elements = $("body .sticky").map(function() {
+	        var $this = $(this);
+	        var offset = $this.offset();
+	        var l = this.offsetLeft;
+	        var t = this.offsetTop;
+	        var h = $this.height();
+	        var w = $this.width();
+
+	        var maxx = l + w;
+	        var maxy = t + h;
+
+	        return ((a.y <= maxy && a.y >= t) && (a.x <= maxx && a.x >= l) || (b.y <= maxy && b.y >= t) && (b.x <= maxx && b.x >= l) || (c.y <= maxy && c.y >= t) && (c.x <= maxx && c.x >= l) || (d.y <= maxy && d.y >= t) && (d.x <= maxx && d.x >= l))  &&  $this.hasClass('sticky') && !$this.hasClass('active')? $this : null;
+	    });
+
+	    return $elements;
+	}
+
 	return {
 		restrict: 'A',
 		priority: 0,
 		link: function($scope, element, iAttrs, controller) {
 			
-			var element;
+			var noteMainElelemnt,
+				noteContentElelemnt,
+				$elements;
 			
 			element.draggable({ cancel: '.note-content', containment: 'parent'}).resizable();
 			element.on('dragstart', function(event) {
-                console.log('Drag strat event trigered');
+                $(event.target).addClass('active');
             });
 			element.on('mouseup', function(event) {
-				if(event.target.className == 'note-header') {
-					element = event.currentTarget.children[1];
+				var pointA = { x:event.target.offsetParent.offsetLeft , y:event.target.offsetParent.offsetTop + event.target.offsetParent.offsetHeight };
+				var pointB = { x:event.target.offsetParent.offsetLeft + event.target.offsetParent.offsetWidth, y:event.target.offsetParent.offsetTop + event.target.offsetParent.offsetHeight };
+				var pointC = { x:event.target.offsetParent.offsetLeft + event.target.offsetParent.offsetWidth, y:event.target.offsetParent.offsetTop};
+				var pointD = { x:event.target.offsetParent.offsetLeft, y:event.target.offsetParent.offsetTop };
+				
+				// Get all stickynotes which are stacked on or below the selected note.
+				$elements = GetAllElementsAt(pointA, pointB, pointC, pointD);
+				var maxZindex = _.max($elements, function (element) {
+				  return parseInt(element[0].style.zIndex);
+				});
+				event.target.offsetParent.style.zIndex = parseInt(maxZindex[0].style.zIndex) + 1;
+				if($(event.target).hasClass('note-header') || $(event.target).hasClass('note-body')) {
+					noteMainElelemnt = event.target.offsetParent;
+					noteContentElelemnt = noteMainElelemnt.children[1];
+				}
+				else if ($(event.target).hasClass('note-content')) {
+					noteMainElelemnt = event.target.offsetParent;
+					noteContentElelemnt = event.target;
 				}
 				else if (event.target.className == 'note-delete') {
 					return;
 				}
-				else {
-					element = event.target;
-				}
-				if (element.offsetParent.style.top != '' && element.offsetParent.style.left != '') {
-					noteService.saveNote(element).then(function(response) {
-						console.log(response);
-					}, function(error) {
-						console.log(error);
-					});
-				}
+				
+				$(noteMainElelemnt).removeClass('active');
+				
+				//loop through the $elements to get their z-index and find the max z-index value among them.
+				
+				
+				//noteMainElelemnt.style.zIndex = 9999;
+				
+				noteService.saveNote(noteContentElelemnt).then(function(response) {
+					console.log(response);
+				}, function(error) {
+					console.log(error);
+				});
+				
 			});
 		}
 	};

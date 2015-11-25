@@ -16,7 +16,8 @@ var noteSchema  = new  mongoose.Schema({
    dimension : {
    				width    : String,
    				height   : String
-   }
+   },
+   zindex: String
 });
 
 var Note = mongoose.model('Note', noteSchema);

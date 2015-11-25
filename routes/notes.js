@@ -16,7 +16,7 @@ module.exports = function(app) {
 				newNote.position.left = req.body.position.left;
 				newNote.dimension.height = req.body.dimension.height;
 				newNote.dimension.width = req.body.dimension.width;
-
+				newNote.zindex = req.body.zindex;
 				newNote.save(function (err, note) {
                     if (err)
                        throw err;

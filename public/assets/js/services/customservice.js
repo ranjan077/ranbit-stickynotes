@@ -19,6 +19,7 @@ customService.factory('noteService', ['$http', '$q', function($http, $q){
 		 		 	height: element.offsetParent.clientHeight,
 		 		 	width: element.offsetParent.clientWidth
 		 		 },
+		 		 zindex: element.offsetParent.style.zIndex,
 		 		 note_id: element.offsetParent.id
 		  }
 		}
@@ -46,7 +47,8 @@ customService.factory('noteService', ['$http', '$q', function($http, $q){
 		 		 dimension : {
 		 		 	height: '25%',
 		 		 	width: '14%'
-		 		 }
+		 		 },
+		 		 zindex: '0'
 		 	}
 		}
 		var deferred = $q.defer();
