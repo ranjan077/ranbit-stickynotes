@@ -44,7 +44,6 @@ myapp.controller('notesController', ['$scope','$http', 'noteService', function($
 		});
 	}
 	$scope.deleteNote = function(event) {
-		event.preventDefault();
 		noteService.deleteNote(event.target.offsetParent.id).then(function() {
 			noteService.getNotes().then(function(notes) {
 				$scope.notes = notes;
