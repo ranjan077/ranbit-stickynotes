@@ -2,15 +2,8 @@ var customService = angular.module('customService',[]);
 
 customService.factory('noteService', ['$http', '$q', function($http, $q){
 
-	function saveNote(event) {
-		var element;
-		if(event.target.className == 'note-header') {
-			element = event.currentTarget.children[1];
-		}
-		else {
-			element = event.target;
-		}
-
+	function saveNote(element) {
+		
 		var req = {
 		 method: 'POST',
 		 url: '/note',

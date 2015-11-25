@@ -18,11 +18,19 @@ myapp.controller('notesController', ['$scope','$http', 'noteService', function($
 	$scope.notes = [];
 
 	$scope.saveNote = function(event) {
-		noteService.saveNote(event).then(function(response) {
-			console.log(response);
+		var element;
+		if(event.target.className == 'note-header') {
+			element = event.currentTarget.children[1];
+		}
+		else {
+			element = event.target;
+		}
+		noteService.saveNote(element).then(function(response) {
+		console.log(response);
 		}, function(error) {
 			console.log(error);
 		});
+	
 	}
 	$scope.addNote = function() {
 		noteService.addNote().then(function() {
@@ -61,16 +69,27 @@ myapp.directive('resizeDragable', ['noteService', function(noteService){
 	return {
 		restrict: 'A',
 		link: function($scope, element, iAttrs, controller) {
-			element.draggable({ cancel: ".note-content", containment: "parent"}).resizable();
-			element.on("dragstart", function(event) {
-                console.log("Drag strat event trigered");
+			
+			var element;
+			
+			element.draggable({ cancel: '.note-content', containment: 'parent'}).resizable();
+			element.on('dragstart', function(event) {
+                console.log('Drag strat event trigered');
             });
 			element.on('mouseup', function(event) {
-				noteService.saveNote(event).then(function(response) {
-					console.log(response);
-				}, function(error) {
-					console.log(error);
-				});
+				if(event.target.className == 'note-header') {
+					element = event.currentTarget.children[1];
+				}
+				else {
+					element = event.target;
+				}
+				if (element.offsetParent.style.top != '' && element.offsetParent.style.left != '') {
+					noteService.saveNote(element).then(function(response) {
+						console.log(response);
+					}, function(error) {
+						console.log(error);
+					});
+				}
 			});
 		}
 	};
