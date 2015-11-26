@@ -111,7 +111,7 @@ myapp.directive('resizeDragable', ['noteService', function(noteService){
 				var maxZindex = _.max($elements, function (element) {
 				  return parseInt(element[0].style.zIndex);
 				});
-				event.target.offsetParent.style.zIndex = parseInt(maxZindex[0].style.zIndex) + 1;
+				
 				if($(event.target).hasClass('note-header') || $(event.target).hasClass('note-body')) {
 					noteMainElelemnt = event.target.offsetParent;
 					noteContentElelemnt = noteMainElelemnt.children[1];
@@ -123,14 +123,10 @@ myapp.directive('resizeDragable', ['noteService', function(noteService){
 				else if (event.target.className == 'note-delete') {
 					return;
 				}
-				
+
+				noteMainElelemnt.style.zIndex = maxZindex == '-Infinity' ? noteMainElelemnt.style.zIndex : parseInt(maxZindex[0].style.zIndex) + 1;
 				$(noteMainElelemnt).removeClass('active');
-				
-				//loop through the $elements to get their z-index and find the max z-index value among them.
-				
-				
-				//noteMainElelemnt.style.zIndex = 9999;
-				
+								
 				noteService.saveNote(noteContentElelemnt).then(function(response) {
 					console.log(response);
 				}, function(error) {
