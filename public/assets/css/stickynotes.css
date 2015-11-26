@@ -8,9 +8,70 @@
     font-family: 'Nothing You Could Do', Arial;
     font-size: 1.4em;
     /* Shadow */
-    -webkit-box-shadow: 10px 10px 29px -8px rgba(0,0,0,0.75);
-    -moz-box-shadow: 10px 10px 29px -8px rgba(0,0,0,0.75);
-    box-shadow: 10px 10px 29px -8px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0px 0px 31px -5px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 31px -5px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 31px -5px rgba(0,0,0,0.75);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefdca', endColorstr='#f7f381',GradientType=0 ) !important; /* IE6-9 */
+}
+ 
+ .sticky[theme='blue'] {
+    /* Mozilla Firefox */ 
+    background-image: -moz-linear-gradient(top, #FFFFFF -80%, #199CFF 120%);
+
+    /* Opera */ 
+    background-image: -o-linear-gradient(top, #FFFFFF -80%, #199CFF 120%);
+
+    /* Webkit (Safari/Chrome 10) */ 
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(-80, #FFFFFF), color-stop(120, #199CFF));
+
+    /* Webkit (Chrome 11+) */ 
+    background-image: -webkit-linear-gradient(top, #FFFFFF -80%, #199CFF 120%);
+
+    /* W3C Markup */ 
+    background-image: linear-gradient(to bottom, #FFFFFF -80%, #199CFF 120%);
+}
+
+  .sticky[theme='red'] {
+    /* IE10+ */ 
+    background-image: -ms-linear-gradient(top, #FFFFFF -120%, #FF9812 120%);
+
+    /* Mozilla Firefox */ 
+    background-image: -moz-linear-gradient(top, #FFFFFF -120%, #FF9812 120%);
+
+    /* Opera */ 
+    background-image: -o-linear-gradient(top, #FFFFFF -120%, #FF9812 120%);
+
+    /* Webkit (Safari/Chrome 10) */ 
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(-120, #FFFFFF), color-stop(120, #FF9812));
+
+    /* Webkit (Chrome 11+) */ 
+    background-image: -webkit-linear-gradient(top, #FFFFFF -120%, #FF9812 120%);
+
+    /* W3C Markup */ 
+    background-image: linear-gradient(to bottom, #FFFFFF -120%, #FF9812 120%);
+}
+
+ .sticky[theme='gray'] {
+    /* IE10+ */ 
+    background-image: -ms-linear-gradient(top, #FFFFFF -40%, #6A7D7A 120%);
+
+    /* Mozilla Firefox */ 
+    background-image: -moz-linear-gradient(top, #FFFFFF -40%, #6A7D7A 120%);
+
+    /* Opera */ 
+    background-image: -o-linear-gradient(top, #FFFFFF -40%, #6A7D7A 120%);
+
+    /* Webkit (Safari/Chrome 10) */ 
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(-40, #FFFFFF), color-stop(120, #6A7D7A));
+
+    /* Webkit (Chrome 11+) */ 
+    background-image: -webkit-linear-gradient(top, #FFFFFF -40%, #6A7D7A 120%);
+
+    /* W3C Markup */ 
+    background-image: linear-gradient(to bottom, #FFFFFF -40%, #6A7D7A 120%);
+}
+
+ .sticky[theme='yellow'] {
     /* Background */
     background: #fefdca !important; /* Old browsers */
     background: -moz-linear-gradient(top, #fefdca 0%, #f7f381 100%) !important; /* FF3.6+ */
@@ -18,10 +79,10 @@
     background: -webkit-linear-gradient(top, #fefdca 0%,#f7f381 100%) !important; /* Chrome10+,Safari5.1+ */
     background: -o-linear-gradient(top, #fefdca 0%,#f7f381 100%) !important; /* Opera11.10+ */
     background: -ms-linear-gradient(top, #fefdca 0%,#f7f381 100%) !important; /* IE10+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefdca', endColorstr='#f7f381',GradientType=0 ) !important; /* IE6-9 */
     background: linear-gradient(top, #fefdca 0%,#f7f381 100%) !important; /* W3C; A catch-all for everything else */
-}
- 
+ }
+
+
 .sticky ol {
     margin: 12px;
 }
@@ -91,4 +152,41 @@ background-color:#F9F9D9;
 
 .ui-resizable-handle {
     z-index: 0 !important;
+}
+
+.note-header-top {
+    height:24px;
+}
+
+.note-header-bottom {
+    height:24px;
+}
+.note-theme {
+    float: right;
+}
+
+.note-theme > div {
+    width:14px;
+    height:15px;
+    float:left;
+    margin-right:5px;
+    border-radius: 150px;
+    -webkit-border-radius: 150px;
+    -moz-border-radius: 150px;
+}
+
+.note-theme .blue{
+    background-color: #6666ff;
+}
+
+.note-theme .red{
+    background-color: #FF0033;
+}
+
+.note-theme .gray{
+    background-color: gray;
+}
+
+.note-theme .yellow{
+    background-color: #F9F590;
 }

@@ -2,7 +2,7 @@ var customService = angular.module('customService',[]);
 
 customService.factory('noteService', ['$http', '$q', function($http, $q){
 
-	function saveNote(element) {
+	function saveNote(element, theme) {
 		
 		var req = {
 		 method: 'POST',
@@ -20,7 +20,8 @@ customService.factory('noteService', ['$http', '$q', function($http, $q){
 		 		 	width: element.offsetParent.clientWidth
 		 		 },
 		 		 zindex: element.offsetParent.style.zIndex,
-		 		 note_id: element.offsetParent.id
+		 		 note_id: element.offsetParent.id,
+		 		 noteTheme: theme || 'yellow'
 		  }
 		}
 		var deferred = $q.defer();
@@ -48,7 +49,8 @@ customService.factory('noteService', ['$http', '$q', function($http, $q){
 		 		 	height: '25%',
 		 		 	width: '14%'
 		 		 },
-		 		 zindex: '0'
+		 		 zindex: '0',
+		 		 noteTheme: 'yellow'
 		 	}
 		}
 		var deferred = $q.defer();

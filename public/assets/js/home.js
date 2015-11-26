@@ -18,14 +18,18 @@ myapp.controller('notesController', ['$scope','$http', 'noteService', function($
 	$scope.notes = [];
 
 	$scope.saveNote = function(event) {
-		var element;
+		var element, theme;
+
 		if(event.target.className == 'note-header') {
 			element = event.currentTarget.children[1];
 		}
 		else {
 			element = event.target;
 		}
-		noteService.saveNote(element).then(function(response) {
+		
+		theme = $(event.target.offsetParent).attr('theme');
+
+		noteService.saveNote(element, theme).then(function(response) {
 		console.log(response);
 		}, function(error) {
 			console.log(error);
@@ -56,6 +60,23 @@ myapp.controller('notesController', ['$scope','$http', 'noteService', function($
 			console.log(error);
 		});
 	}
+
+	$scope.changeTheme = function(event, theme) {
+		var element = event.target.offsetParent;
+		if (theme == 'blue') {
+			$(element).attr('theme', 'blue');
+		}
+		else if (theme == 'red') {
+			$(element).attr('theme', 'red');
+		}
+		else if (theme == 'gray') {
+			$(element).attr('theme', 'gray');
+		}
+		else if (theme == 'yellow') {
+			$(element).attr('theme', 'yellow');
+		}
+	}
+
 	function init() {
 		noteService.getNotes().then(function(notes) {
 			$scope.notes = notes;
@@ -112,22 +133,18 @@ myapp.directive('resizeDragable', ['noteService', function(noteService){
 				  return parseInt(element[0].style.zIndex);
 				});
 				
-				if($(event.target).hasClass('note-header') || $(event.target).hasClass('note-body')) {
+				if (event.target.className == 'note-delete') {
+					return;
+				}
+				else {
 					noteMainElelemnt = event.target.offsetParent;
 					noteContentElelemnt = noteMainElelemnt.children[1];
-				}
-				else if ($(event.target).hasClass('note-content')) {
-					noteMainElelemnt = event.target.offsetParent;
-					noteContentElelemnt = event.target;
-				}
-				else if (event.target.className == 'note-delete') {
-					return;
 				}
 
 				noteMainElelemnt.style.zIndex = maxZindex == '-Infinity' ? noteMainElelemnt.style.zIndex : parseInt(maxZindex[0].style.zIndex) + 1;
 				$(noteMainElelemnt).removeClass('active');
 								
-				noteService.saveNote(noteContentElelemnt).then(function(response) {
+				noteService.saveNote(noteContentElelemnt, $(noteMainElelemnt).attr('theme')).then(function(response) {
 					console.log(response);
 				}, function(error) {
 					console.log(error);

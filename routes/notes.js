@@ -17,6 +17,7 @@ module.exports = function(app) {
 				newNote.dimension.height = req.body.dimension.height;
 				newNote.dimension.width = req.body.dimension.width;
 				newNote.zindex = req.body.zindex;
+				newNote.noteTheme = req.body.noteTheme;
 				newNote.save(function (err, note) {
                     if (err)
                        throw err;
@@ -32,6 +33,8 @@ module.exports = function(app) {
 				Note.findByIdAndUpdate(req.body.note_id , req.body, {upsert: true}, function(err, note) {
 					res.send(note);
 				});
+
+				// reseting zindex of other notes
 			}
 		})
 	});

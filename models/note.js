@@ -17,7 +17,8 @@ var noteSchema  = new  mongoose.Schema({
    				width    : String,
    				height   : String
    },
-   zindex: String
+   zindex: String,
+   noteTheme: String
 });
 
 var Note = mongoose.model('Note', noteSchema);
