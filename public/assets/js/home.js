@@ -8,11 +8,11 @@ myapp.config(['$routeProvider',function($routeProvider) {
 	.when('/todo', {
 		templateUrl: 'assets/templates/todo.ejs'
 	})
-}])
+}]);
 
 myapp.controller('mainController', ['$scope', '$location', function($scope, $location){
 	$location.path('/notes');
-}])
+}]);
 
 myapp.controller('notesController', ['$scope','$http', 'noteService', function($scope, $http, noteService){
 	$scope.notes = [];
@@ -36,6 +36,7 @@ myapp.controller('notesController', ['$scope','$http', 'noteService', function($
 		});
 	
 	}
+
 	$scope.addNote = function() {
 		noteService.addNote().then(function() {
 			noteService.getNotes().then(function(notes) {
@@ -47,7 +48,9 @@ myapp.controller('notesController', ['$scope','$http', 'noteService', function($
 			console.log(error);
 		});
 	}
+
 	$scope.deleteNote = function(event) {
+		event.deleteNote = true;
 		noteService.deleteNote(event.target.offsetParent.id).then(function(response) {
 			if (response.data.status == 'Removed note') {
 				noteService.getNotes().then(function(notes) {
@@ -86,7 +89,7 @@ myapp.controller('notesController', ['$scope','$http', 'noteService', function($
 	}
 
 	init();
-}])
+}]);
 
 myapp.directive('resizeDragable', ['noteService', function(noteService){
 
@@ -108,6 +111,26 @@ myapp.directive('resizeDragable', ['noteService', function(noteService){
 	    return $elements;
 	}
 
+	function getCoordinatesOfElement (element) {
+		var pointA = { x:element.offsetLeft , y:element.offsetTop + element.offsetHeight };
+		var pointB = { x:element.offsetLeft + element.offsetWidth, y:element.offsetTop + element.offsetHeight };
+		var pointC = { x:element.offsetLeft + element.offsetWidth, y:element.offsetTop};
+		var pointD = { x:element.offsetLeft, y:element.offsetTop };
+
+		return {
+			'A': pointA,
+			'B': pointB,
+			'C': pointC,
+			'D': pointD
+		}
+	}
+
+	function getMaxZindexElement(elements) {
+		return _.max(elements, function (element) {
+		 	return parseInt(element[0].style.zIndex);
+		});
+	}
+
 	return {
 		restrict: 'A',
 		priority: 0,
@@ -118,39 +141,48 @@ myapp.directive('resizeDragable', ['noteService', function(noteService){
 				$elements;
 			
 			element.draggable({ cancel: '.note-content', containment: 'parent'}).resizable();
-			element.on('dragstart', function(event) {
-                $(event.target).addClass('active');
-            });
-			element.on('mouseup', function(event) {
-				var pointA = { x:event.target.offsetParent.offsetLeft , y:event.target.offsetParent.offsetTop + event.target.offsetParent.offsetHeight };
-				var pointB = { x:event.target.offsetParent.offsetLeft + event.target.offsetParent.offsetWidth, y:event.target.offsetParent.offsetTop + event.target.offsetParent.offsetHeight };
-				var pointC = { x:event.target.offsetParent.offsetLeft + event.target.offsetParent.offsetWidth, y:event.target.offsetParent.offsetTop};
-				var pointD = { x:event.target.offsetParent.offsetLeft, y:event.target.offsetParent.offsetTop };
-				
-				// Get all stickynotes which are stacked on or below the selected note.
-				$elements = GetAllElementsAt(pointA, pointB, pointC, pointD);
-				var maxZindex = _.max($elements, function (element) {
-				  return parseInt(element[0].style.zIndex);
-				});
-				
-				if (event.target.className == 'note-delete') {
-					return;
-				}
-				else {
-					noteMainElelemnt = event.target.offsetParent;
-					noteContentElelemnt = noteMainElelemnt.children[1];
-				}
 
-				noteMainElelemnt.style.zIndex = maxZindex == '-Infinity' ? noteMainElelemnt.style.zIndex : parseInt(maxZindex[0].style.zIndex) + 1;
-				$(noteMainElelemnt).removeClass('active');
+			element.on('dragstart', function(event) {
+                $(element).addClass('active');
+            });
+
+			element.on('dragstop', function(event) {
+			
+				var point = getCoordinatesOfElement(element[0]);
+				// Get all stickynotes which are stacked on or below the selected note.
+				$elements = GetAllElementsAt(point['A'], point['B'], point['C'], point['D']);
+				var maxZindexElement = getMaxZindexElement($elements);
+				
+				element[0].style.zIndex = maxZindexElement == '-Infinity' ? element[0].style.zIndex : parseInt(maxZindexElement[0].style.zIndex) + 1;
+				$(element).removeClass('active');
 								
-				noteService.saveNote(noteContentElelemnt, $(noteMainElelemnt).attr('theme')).then(function(response) {
+				noteService.saveNote(element[0], $(element).attr('theme')).then(function(response) {
 					console.log(response);
 				}, function(error) {
 					console.log(error);
 				});
 				
 			});
+
+			element.on('mouseup', function(event) {
+				if (event.deleteNote && event.deleteNote == true) {
+					return;
+				}
+				$(element).addClass('active');
+				var point = getCoordinatesOfElement(element[0]);
+				// Get all stickynotes which are stacked on or below the selected note.
+				$elements = GetAllElementsAt(point['A'], point['B'], point['C'], point['D']);
+				var maxZindexElement = getMaxZindexElement($elements);
+				element[0].style.zIndex = maxZindexElement == '-Infinity' ? element[0].style.zIndex : parseInt(maxZindexElement[0].style.zIndex) + 1;
+				$(element).removeClass('active');
+
+				noteService.saveNote(element[0], $(element).attr('theme')).then(function(response) {
+					console.log(response);
+				}, function(error) {
+					console.log(error);
+				});
+
+			})
 		}
 	};
 }]);

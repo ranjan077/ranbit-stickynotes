@@ -103,3 +103,22 @@ body {
   display: inline-block;
   border-radius: 50%;
 }
+
+
+/* my css=============== */
+
+.notes-main-container {
+  position: relative;
+  height: 90vh
+}
+
+.circular {
+    width: 100px;
+    height: 100px;
+    border-radius: 150px;
+    -webkit-border-radius: 150px;
+    -moz-border-radius: 150px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+    -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+    -moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+}

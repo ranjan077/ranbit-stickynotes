@@ -1,11 +1,13 @@
 var Note = require('../models/note');
 var User = require('../models/user');
+var mongoose = require('mongoose');
+
 
 module.exports = function(app) {
 	app.post('/note', function(req, res, next) {
 		var newNote = new Note();
-		
-		Note.findById(req.body.note_id, function(err, note) {
+		var id = mongoose.Types.ObjectId(req.body.note_id);
+		Note.findById(id, function(err, note) {
 			if (err) {
 				throw err;
 			}

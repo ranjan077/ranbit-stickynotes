@@ -12,15 +12,15 @@ customService.factory('noteService', ['$http', '$q', function($http, $q){
 		 },
 		 data: { note: element.innerText,
 		 		 position : {
-		 		 	top: element.offsetParent.style.top,
-		 		 	left: element.offsetParent.style.left
+		 		 	top: element.style.top,
+		 		 	left: element.style.left
 		 		 },
 		 		 dimension : {
-		 		 	height: element.offsetParent.clientHeight,
-		 		 	width: element.offsetParent.clientWidth
+		 		 	height: element.clientHeight,
+		 		 	width: element.clientWidth
 		 		 },
-		 		 zindex: element.offsetParent.style.zIndex,
-		 		 note_id: element.offsetParent.id,
+		 		 zindex: element.style.zIndex,
+		 		 note_id: element.id,
 		 		 noteTheme: theme || 'yellow'
 		  }
 		}
