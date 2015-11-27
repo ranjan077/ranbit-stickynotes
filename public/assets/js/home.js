@@ -50,7 +50,6 @@ myapp.controller('notesController', ['$scope','$http', 'noteService', function($
 	}
 
 	$scope.deleteNote = function(event) {
-		event.deleteNote = true;
 		noteService.deleteNote(event.target.offsetParent.id).then(function(response) {
 			if (response.data.status == 'Removed note') {
 				noteService.getNotes().then(function(notes) {
@@ -133,7 +132,7 @@ myapp.directive('resizeDragable', ['noteService', function(noteService){
 
 	return {
 		restrict: 'A',
-		priority: 0,
+		priority: 1,
 		link: function($scope, element, iAttrs, controller) {
 			
 			var noteMainElelemnt,
@@ -165,7 +164,7 @@ myapp.directive('resizeDragable', ['noteService', function(noteService){
 			});
 
 			element.on('mouseup', function(event) {
-				if (event.deleteNote && event.deleteNote == true) {
+				if ($(event.target).hasClass('note-delete')) {
 					return;
 				}
 				$(element).addClass('active');
