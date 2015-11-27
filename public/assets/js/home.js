@@ -172,7 +172,7 @@ myapp.directive('resizeDragable', ['noteService', function(noteService){
 			});*/
 
 			element.on('mouseup', function(event) {
-				if ($(event.target).hasClass('note-delete') || $(event.target).hasClass('note-content')) {
+				if ($(event.target).hasClass('note-delete')) {
 					return;
 				}
 				$(element).addClass('active');
