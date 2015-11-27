@@ -150,16 +150,17 @@ myapp.directive('resizeDragable', ['noteService', function(noteService){
 
 			element.on('dragstart', function(event) {
                 $(element).addClass('active');
+                element[0].style.zIndex = 9999;
             });
 
-			element.on('dragstop', function(event) {
+			/*element.on('dragstop', function(event) {
 			
 				var point = getCoordinatesOfElement(element[0]);
 				// Get all stickynotes which are stacked on or below the selected note.
 				$elements = GetAllElementsAt(point['A'], point['B'], point['C'], point['D']);
 				var maxZindexElement = getMaxZindexElement($elements);
 				
-				element[0].style.zIndex = maxZindexElement == '-Infinity' ? element[0].style.zIndex : parseInt(maxZindexElement[0].style.zIndex) + 1;
+				element[0].style.zIndex = maxZindexElement == '-Infinity' ? 0 : parseInt(maxZindexElement[0].style.zIndex) + 1;
 				$(element).removeClass('active');
 								
 				noteService.saveNote(element[0], $(element).attr('theme')).then(function(response) {
@@ -168,7 +169,7 @@ myapp.directive('resizeDragable', ['noteService', function(noteService){
 					console.log(error);
 				});
 				
-			});
+			});*/
 
 			element.on('mouseup', function(event) {
 				if ($(event.target).hasClass('note-delete') || $(event.target).hasClass('note-content')) {
@@ -179,7 +180,7 @@ myapp.directive('resizeDragable', ['noteService', function(noteService){
 				// Get all stickynotes which are stacked on or below the selected note.
 				$elements = GetAllElementsAt(point['A'], point['B'], point['C'], point['D']);
 				var maxZindexElement = getMaxZindexElement($elements);
-				element[0].style.zIndex = maxZindexElement == '-Infinity' ? element[0].style.zIndex : parseInt(maxZindexElement[0].style.zIndex) + 1;
+				element[0].style.zIndex = maxZindexElement == '-Infinity' ? 0 : parseInt(maxZindexElement[0].style.zIndex) + 1;
 				$(element).removeClass('active');
 
 				noteService.saveNote(element[0], $(element).attr('theme')).then(function(response) {
