@@ -37,6 +37,13 @@ myapp.controller('notesController', ['$scope','$http', 'noteService', function($
 	
 	}
 
+	$scope.updateNoteContent = function(event) {
+		noteService.updateNoteContent(event.target).then(function(response) {
+			console.log(response);
+		}, function(error) {
+			console.log(error);
+		});
+	}
 	$scope.addNote = function() {
 		noteService.addNote().then(function() {
 			noteService.getNotes().then(function(notes) {
@@ -164,7 +171,7 @@ myapp.directive('resizeDragable', ['noteService', function(noteService){
 			});
 
 			element.on('mouseup', function(event) {
-				if ($(event.target).hasClass('note-delete')) {
+				if ($(event.target).hasClass('note-delete') || $(event.target).hasClass('note-content')) {
 					return;
 				}
 				$(element).addClass('active');

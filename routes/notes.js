@@ -41,6 +41,13 @@ module.exports = function(app) {
 		})
 	});
 	
+	app.put('/note', function(req, res, next) {
+		var id = mongoose.Types.ObjectId(req.body.note_id);
+		Note.findByIdAndUpdate(req.body.note_id , req.body, {upsert: false}, function(err, note) {
+			res.send(note);
+		});
+	});
+
 	app.get('/notes', function(req, res) {
 		User.findById(req.user._id, function(err, user) {
 					Note.find({

@@ -49,22 +49,39 @@
           </div>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav social-links">
+            <li><a href="#"><i class="fa fa-github"></i></a></li>
+          </ul>
           <ul class="nav navbar-nav navbar-right">
+            <li class="avatar">
+              <% if (user.facebook && user.facebook.id) {%>
+                  <div class="circular allign-center" style="background: url(https://graph.facebook.com/<%= user.facebook.id%>/picture?type=normal) no-repeat;"></div>
+                  <div>
+              <% } else {%>
+                  <img src="/assets/img/profile_pic.png" style="height: 30px; width: 30px;"/>
+              <% } %>
+            </li>
             <li><a href="/logout">Logout</a></li>
           </ul>
-          <div style="float: right;">
-              <a href="https://github.com/codef0rmer/angular-dragdrop" class="btn primary">Fork me on Github</a>
-            </div>
         </div>
       </div>
     </nav>
+    <!-- <header class="navbar">
+      <div class="container">
+          <div class="nav-no-collapse header-nav">
+              <ul class="nav navbar-nav pull-right">
+                <li><a href="/logout">Logout</a></li>
+              </ul>
+          </div>
+      </div>
+    </header> -->
 
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li><a href="#/notes">Sticky Notes <span class="sr-only">(current)</span></a></li>
-            <li><a href="#/todo">Board Notes</a></li>
+            <li><a href="#/notes"><span class="fa-stack fa-lg pull-left"><i class="fa fa-sticky-note fa-stack-1x "></i></span>Sticky Notes <span class="sr-only">(current)</span></a></li>
+            <li><a href="#/todo"><span class="fa-stack fa-lg pull-left"><i class="fa fa-check-circle-o fa-stack-1x "></i></span>Board Notes</a></li>
           </ul>
         </div>
         <div ng-controller="mainController" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

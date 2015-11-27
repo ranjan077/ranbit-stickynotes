@@ -33,6 +33,26 @@ customService.factory('noteService', ['$http', '$q', function($http, $q){
 		return deferred.promise;
 	}
 
+	function updateNoteContent (element) {
+		var req = {
+		 method: 'PUT',
+		 url: '/note',
+		 headers: {
+		   'Content-Type': 'application/json'
+		 },
+		 data: { note: element.innerText,
+		 		 note_id: element.offsetParent.id
+		 	}
+		}
+		var deferred = $q.defer();
+		$http(req).then(function(data) {
+			deferred.resolve('Note is saved.');
+		}, function(error) {
+			deferred.reject(error);
+		});
+		return deferred.promise;
+	}
+
 	function addNote() {
 		var req = {
 		 method: 'POST',
@@ -95,6 +115,7 @@ customService.factory('noteService', ['$http', '$q', function($http, $q){
 		saveNote: saveNote,
 		addNote: addNote,
 		getNotes: getNotes,
-		deleteNote: deleteNote
+		deleteNote: deleteNote,
+		updateNoteContent : updateNoteContent
 	}
 }])
