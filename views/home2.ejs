@@ -55,8 +55,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li class="avatar">
               <% if (user.facebook && user.facebook.id) {%>
-                  <div class="circular allign-center" style="background: url(https://graph.facebook.com/<%= user.facebook.id%>/picture?type=normal) no-repeat;"></div>
-                  <div>
+                  <img src="https://graph.facebook.com/<%= user.facebook.id%>/picture?type=normal" style="height: 30px; width: 30px;"/>
               <% } else {%>
                   <img src="/assets/img/profile_pic.png" style="height: 30px; width: 30px;"/>
               <% } %>
