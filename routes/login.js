@@ -18,7 +18,7 @@ module.exports = function(app, passport) {
 	});
 
 	app.get('/home', isLoggedIn, function(req, res) {
-		res.render('home2', {user : req.user});
+		res.render('home', {user : req.user});
 	});
 
 	app.post('/login', passport.authenticate('local-login', {
