@@ -1,3 +1,3 @@
-Stciky otes web app built using angulat.js and node.js.
+Sticky Notes web app built using angular.js and node.js.
 
 Link: ww.ranbit.com
