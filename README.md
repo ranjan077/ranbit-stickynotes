@@ -1,3 +1,3 @@
-The OpenShift `nodejs` cartridge documentation can be found at:
+Stciky otes web app built using angulat.js and node.js.
 
-http://openshift.github.io/documentation/oo_cartridge_guide.html#nodejs
+Link: ww.ranbit.com
